@@ -1,0 +1,32 @@
+@startuml
+
+class WeatherForecastApp {
+    +main(String[] args)
+}
+
+class WeatherForecastService {
+    -static final String TARGET_URL
+    +List<Forecast> loadForecasts()
+    -String fetchForecastJson()
+    -List<Forecast> parseForecasts(String jsonText)
+}
+
+class Forecast {
+    -LocalDateTime dateTime
+    -String weather
+    +Forecast(LocalDateTime dateTime, String weather)
+    +LocalDateTime getDateTime()
+    +String getWeather()
+    +String formatForDisplay()
+}
+
+class WeatherForecastPrinter {
+    +void print(List<Forecast> forecasts)
+}
+
+WeatherForecastApp --> WeatherForecastService : uses
+WeatherForecastApp --> WeatherForecastPrinter : uses
+WeatherForecastService --> Forecast : creates
+WeatherForecastPrinter --> Forecast : reads
+
+@enduml
